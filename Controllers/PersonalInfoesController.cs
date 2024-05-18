@@ -16,10 +16,10 @@ namespace IzimpisiApplicationsOffice.Controllers
         private DbContextIAO db = new DbContextIAO();
 
         // GET: PersonalInfoes
-        public ActionResult Index()
+       /** public ActionResult Index()
         {
             return View(db.PersonalInfo.ToList());
-        }
+        } **/
 
         // GET: PersonalInfoes/Details/5
         public ActionResult Details(int? id)
