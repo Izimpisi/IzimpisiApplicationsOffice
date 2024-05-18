@@ -18,3 +18,16 @@ select,
 textarea {
     max-width: 280px;
 }
+.photo-grid {
+    margin-top: 20px;
+}
+
+.photo-grid img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+    }
+
+.collage-images img {
+    width: 100%;
+}
