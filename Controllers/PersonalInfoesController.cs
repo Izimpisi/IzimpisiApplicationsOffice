@@ -14,7 +14,8 @@ namespace IzimpisiApplicationsOffice.Controllers
 {
     public class PersonalInfoesController : Controller
     {
-        private DbContextIAO db = new DbContextIAO();
+        private ApplicationDbContext db = new ApplicationDbContext();
+
 
         // GET: PersonalInfoes
         public ActionResult Index()
@@ -40,6 +41,18 @@ namespace IzimpisiApplicationsOffice.Controllers
         // GET: PersonalInfoes/Create
         public ActionResult Create()
         {
+            // Retrieve the current user's ID
+            string userId = User.Identity.GetUserId();
+
+            // Check if the user already has a PersonalInfo record
+            var existingPersonalInfo = db.PersonalInfo.FirstOrDefault(pi => pi.ApplicationUserId == userId);
+
+            if (existingPersonalInfo != null)
+            {
+                // Redirect to \schoolbackgrounds\create if the user already has a PersonalInfo record
+                return RedirectToAction("Create", "SchoolBackgrounds");
+            }
+
             return View();
         }
 
@@ -60,15 +73,10 @@ namespace IzimpisiApplicationsOffice.Controllers
                 return RedirectToAction("Register", "Account");
             }
 
-            if (ModelState.IsValid)
-            {
                 personalInfo.ApplicationUserId = userId;
                 db.PersonalInfo.Add(personalInfo);
                 db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(personalInfo);
+                return RedirectToAction("/SchoolBackgrounds/Create");
         }
 
         // GET: PersonalInfoes/Edit/5
@@ -97,7 +105,7 @@ namespace IzimpisiApplicationsOffice.Controllers
             {
                 db.Entry(personalInfo).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("SchoolBackgrounds/Create");
+                return RedirectToAction("/SchoolBackgrounds/Create");
             }
             return View(personalInfo);
         }

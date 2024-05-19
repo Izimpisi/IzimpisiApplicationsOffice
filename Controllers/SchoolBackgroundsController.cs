@@ -13,7 +13,8 @@ namespace IzimpisiApplicationsOffice.Controllers
 {
     public class SchoolBackgroundsController : Controller
     {
-        private DbContextIAO db = new DbContextIAO();
+        private ApplicationDbContext db = new ApplicationDbContext();
+
 
         // GET: SchoolBackgrounds
         public ActionResult Index()

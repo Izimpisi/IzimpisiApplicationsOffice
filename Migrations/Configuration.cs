@@ -5,14 +5,15 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<IzimpisiApplicationsOffice.Models.DbContextIAO>
+    internal sealed class Configuration : DbMigrationsConfiguration<IzimpisiApplicationsOffice.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            ContextKey = "IzimpisiApplicationsOffice.Models.ApplicationDbContext";
         }
 
-        protected override void Seed(IzimpisiApplicationsOffice.Models.DbContextIAO context)
+        protected override void Seed(IzimpisiApplicationsOffice.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

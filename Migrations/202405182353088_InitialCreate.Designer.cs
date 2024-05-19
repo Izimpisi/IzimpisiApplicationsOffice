@@ -7,13 +7,13 @@ namespace IzimpisiApplicationsOffice.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class UpdateUserRelationships : IMigrationMetadata
+    public sealed partial class InitialCreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateUserRelationships));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "202405182249180_UpdateUserRelationships"; }
+            get { return "202405182353088_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source
