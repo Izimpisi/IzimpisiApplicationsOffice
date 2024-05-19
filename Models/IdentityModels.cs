@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using IzimpisiApplicationsOffice.Models.UserFields;
@@ -35,6 +36,7 @@ namespace IzimpisiApplicationsOffice.Models
         }
 
         public DbSet<SchoolBackground> SchoolBackgrounds { get; set; }
+        public DbSet<SchoolRecords> SchoolRecords { get; set; }
         public DbSet<PersonalInfo> PersonalInfo { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -57,6 +59,10 @@ namespace IzimpisiApplicationsOffice.Models
                 .WithRequired(sb => sb.ApplicationUser)
                 .WillCascadeOnDelete();
 
+            modelBuilder.Entity<SchoolRecords>()
+                .HasRequired(s => s.SchoolBackground) // SchoolRecord must have one school background
+                .WithMany(u => u.SchoolRecords) // Schoo background can have many SchoolRecords
+                .HasForeignKey(s => s.ApplicationUserId);
         }
     }
     }

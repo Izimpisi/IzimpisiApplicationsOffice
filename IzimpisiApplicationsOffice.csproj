@@ -173,6 +173,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PersonalInfoesController.cs" />
     <Compile Include="Controllers\SchoolBackgroundsController.cs" />
+    <Compile Include="Controllers\SchoolRecordsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -184,12 +185,25 @@
     <Compile Include="Migrations\202405191047172_UpdateUserRelationships.designer.cs">
       <DependentUpon>202405191047172_UpdateUserRelationships.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202405191345320_UpdateUserRelationships1.cs" />
+    <Compile Include="Migrations\202405191345320_UpdateUserRelationships1.designer.cs">
+      <DependentUpon>202405191345320_UpdateUserRelationships1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405191412296_UpdateUserRelationships2.cs" />
+    <Compile Include="Migrations\202405191412296_UpdateUserRelationships2.designer.cs">
+      <DependentUpon>202405191412296_UpdateUserRelationships2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405191515370_UpdateUserRelationships3.cs" />
+    <Compile Include="Migrations\202405191515370_UpdateUserRelationships3.designer.cs">
+      <DependentUpon>202405191515370_UpdateUserRelationships3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UserFields\PersonalInfo.cs" />
     <Compile Include="Models\UserFields\SchoolBackground.cs" />
+    <Compile Include="Models\UserFields\SchoolRecords.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -274,6 +288,12 @@
     <Content Include="Views\SchoolBackgrounds\Details.cshtml" />
     <Content Include="Views\SchoolBackgrounds\Edit.cshtml" />
     <Content Include="Views\SchoolBackgrounds\Index.cshtml" />
+    <Content Include="Views\SchoolRecords\Create.cshtml" />
+    <Content Include="Views\SchoolRecords\Delete.cshtml" />
+    <Content Include="Views\SchoolRecords\Details.cshtml" />
+    <Content Include="Views\SchoolRecords\Edit.cshtml" />
+    <Content Include="Views\SchoolRecords\Index.cshtml" />
+    <Content Include="Views\Shared\SchoolRecordsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -311,6 +331,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202405191047172_UpdateUserRelationships.resx">
       <DependentUpon>202405191047172_UpdateUserRelationships.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405191345320_UpdateUserRelationships1.resx">
+      <DependentUpon>202405191345320_UpdateUserRelationships1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405191412296_UpdateUserRelationships2.resx">
+      <DependentUpon>202405191412296_UpdateUserRelationships2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405191515370_UpdateUserRelationships3.resx">
+      <DependentUpon>202405191515370_UpdateUserRelationships3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

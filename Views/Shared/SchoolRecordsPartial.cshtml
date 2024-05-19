@@ -1,0 +1,10 @@
+﻿@* SchoolRecordsPartial.cshtml *@
+@foreach (var record in ViewBag.SchoolRecords)
+{
+    <tr>
+        <td>@record.SubjectName</td>
+        <td>@record.Score</td>
+        <!-- Add more columns as needed -->
+    </tr>
+}
+

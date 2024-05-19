@@ -12,57 +12,47 @@ using Microsoft.AspNet.Identity;
 
 namespace IzimpisiApplicationsOffice.Controllers
 {
-    public class SchoolBackgroundsController : Controller
+    public class SchoolRecordsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-
-        // GET: SchoolBackgrounds
+        // GET: SchoolRecords
         public ActionResult Index()
         {
-            return View(db.SchoolBackgrounds.ToList());
+            var schoolRecords = db.SchoolRecords.Include(s => s.SchoolBackground);
+            return View(schoolRecords.ToList());
         }
 
-        // GET: SchoolBackgrounds/Details/5
+        // GET: SchoolRecords/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SchoolBackground schoolBackground = db.SchoolBackgrounds.Find(id);
-            if (schoolBackground == null)
+            SchoolRecords schoolRecords = db.SchoolRecords.Find(id);
+            if (schoolRecords == null)
             {
                 return HttpNotFound();
             }
-            return View(schoolBackground);
+            return View(schoolRecords);
         }
 
-        // GET: SchoolBackgrounds/Create
+        // GET: SchoolRecords/Create
         public ActionResult Create()
         {
-            // Retrieve the current user's ID
-            string userId = User.Identity.GetUserId();
-
-            // Check if the user already has a PersonalInfo record
-            var existingSchoolBackground = db.SchoolBackgrounds.FirstOrDefault(pi => pi.ApplicationUserId == userId);
-
-            if (existingSchoolBackground != null)
-            {
-                // Redirect to \schoolbackgrounds\create if the user already has a PersonalInfo record
-                return RedirectToAction("Create", "SchoolRecords");
-            }
-
+            ViewBag.ApplicationUserId = new SelectList(db.SchoolBackgrounds, "ApplicationUserId", "SchoolName");
             return View();
         }
 
-        // POST: SchoolBackgrounds/Create
+        // POST: SchoolRecords/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,SchoolName,YearCompleted")] SchoolBackground schoolBackground)
+        public ActionResult Create([Bind(Include = "Id,SubjectName,Score")] SchoolRecords schoolRecords)
         {
+
             // Retrieve the current user's ID
             string userId = User.Identity.GetUserId();
 
@@ -71,66 +61,68 @@ namespace IzimpisiApplicationsOffice.Controllers
                 // If the user is not logged in, redirect to the register page
                 return RedirectToAction("Register", "Account");
             }
-
-            schoolBackground.ApplicationUserId = userId;
-            db.SchoolBackgrounds.Add(schoolBackground);
+                schoolRecords.level = schoolRecords.GetAPSLevel();
+                schoolRecords.ApplicationUserId = userId;
+                db.SchoolRecords.Add(schoolRecords);
                 db.SaveChanges();
-            return RedirectToAction("Create", "SchoolRecords");
+                return RedirectToAction("Index", "SchoolRecords");
         }
 
-        // GET: SchoolBackgrounds/Edit/5
+        // GET: SchoolRecords/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SchoolBackground schoolBackground = db.SchoolBackgrounds.Find(id);
-            if (schoolBackground == null)
+            SchoolRecords schoolRecords = db.SchoolRecords.Find(id);
+            if (schoolRecords == null)
             {
                 return HttpNotFound();
             }
-            return View(schoolBackground);
+            ViewBag.ApplicationUserId = new SelectList(db.SchoolBackgrounds, "ApplicationUserId", "SchoolName", schoolRecords.ApplicationUserId);
+            return View(schoolRecords);
         }
 
-        // POST: SchoolBackgrounds/Edit/5
+        // POST: SchoolRecords/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,SchoolName,YearCompleted,ApplicationUserId")] SchoolBackground schoolBackground)
+        public ActionResult Edit([Bind(Include = "Id,SubjectName,Score,level,ApplicationUserId")] SchoolRecords schoolRecords)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(schoolBackground).State = EntityState.Modified;
+                db.Entry(schoolRecords).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(schoolBackground);
+            ViewBag.ApplicationUserId = new SelectList(db.SchoolBackgrounds, "ApplicationUserId", "SchoolName", schoolRecords.ApplicationUserId);
+            return View(schoolRecords);
         }
 
-        // GET: SchoolBackgrounds/Delete/5
+        // GET: SchoolRecords/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SchoolBackground schoolBackground = db.SchoolBackgrounds.Find(id);
-            if (schoolBackground == null)
+            SchoolRecords schoolRecords = db.SchoolRecords.Find(id);
+            if (schoolRecords == null)
             {
                 return HttpNotFound();
             }
-            return View(schoolBackground);
+            return View(schoolRecords);
         }
 
-        // POST: SchoolBackgrounds/Delete/5
+        // POST: SchoolRecords/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            SchoolBackground schoolBackground = db.SchoolBackgrounds.Find(id);
-            db.SchoolBackgrounds.Remove(schoolBackground);
+            SchoolRecords schoolRecords = db.SchoolRecords.Find(id);
+            db.SchoolRecords.Remove(schoolRecords);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
