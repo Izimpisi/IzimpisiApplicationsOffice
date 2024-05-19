@@ -10,7 +10,6 @@ namespace IzimpisiApplicationsOffice.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-       
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -18,9 +17,9 @@ namespace IzimpisiApplicationsOffice.Models
             // Add custom user claims here
             return userIdentity;
         }
-
-        public SchoolBackground SchoolBackground { get; set; }
-        public PersonalInfo PersonalInfo { get; set; }
+        public bool HasApplied {  get; set; } = false;
+        public virtual SchoolBackground SchoolBackground { get; set; }
+        public virtual PersonalInfo PersonalInfo { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

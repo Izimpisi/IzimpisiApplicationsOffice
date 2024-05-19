@@ -10,10 +10,6 @@ namespace IzimpisiApplicationsOffice.Models.UserFields
 {
     public class SchoolBackground
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         [Required]
         public string SchoolName { get; set; }
 
@@ -29,7 +25,9 @@ namespace IzimpisiApplicationsOffice.Models.UserFields
 
 
         //foreign keys
+        [Key]
         [Required]
+        [ForeignKey(nameof(ApplicationUser))]
         public string ApplicationUserId { get; set; }
 
         public virtual ApplicationUser ApplicationUser { get; set; }

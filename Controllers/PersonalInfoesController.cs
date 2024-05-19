@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using IzimpisiApplicationsOffice.Models;
 using IzimpisiApplicationsOffice.Models.UserFields;
+using Microsoft.AspNet.Identity;
 
 namespace IzimpisiApplicationsOffice.Controllers
 {
@@ -16,10 +17,10 @@ namespace IzimpisiApplicationsOffice.Controllers
         private DbContextIAO db = new DbContextIAO();
 
         // GET: PersonalInfoes
-       /** public ActionResult Index()
+        public ActionResult Index()
         {
             return View(db.PersonalInfo.ToList());
-        } **/
+        } 
 
         // GET: PersonalInfoes/Details/5
         public ActionResult Details(int? id)
@@ -47,10 +48,21 @@ namespace IzimpisiApplicationsOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,IdentityNumber,Title,FirstName,LastName,Age,ApplicationUserId")] PersonalInfo personalInfo)
+        public ActionResult Create([Bind(Include = "Id,IdentityNumber,Title,FirstName,LastName,Age")] PersonalInfo personalInfo)
         {
+
+            // Retrieve the current user's ID
+            string userId = User.Identity.GetUserId();
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                // If the user is not logged in, redirect to the register page
+                return RedirectToAction("Register", "Account");
+            }
+
             if (ModelState.IsValid)
             {
+                personalInfo.ApplicationUserId = userId;
                 db.PersonalInfo.Add(personalInfo);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -85,7 +97,7 @@ namespace IzimpisiApplicationsOffice.Controllers
             {
                 db.Entry(personalInfo).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("SchoolBackgrounds/Create");
             }
             return View(personalInfo);
         }
