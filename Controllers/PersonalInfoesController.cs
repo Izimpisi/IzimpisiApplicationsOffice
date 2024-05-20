@@ -44,6 +44,11 @@ namespace IzimpisiApplicationsOffice.Controllers
             // Retrieve the current user's ID
             string userId = User.Identity.GetUserId();
 
+            if(userId == null)
+            {
+                return RedirectToAction("Register", "Account");
+            }
+
             // Check if the user already has a PersonalInfo record
             var existingPersonalInfo = db.PersonalInfo.FirstOrDefault(pi => pi.ApplicationUserId == userId);
 
@@ -76,7 +81,7 @@ namespace IzimpisiApplicationsOffice.Controllers
                 personalInfo.ApplicationUserId = userId;
                 db.PersonalInfo.Add(personalInfo);
                 db.SaveChanges();
-                return RedirectToAction("/SchoolBackgrounds/Create");
+                return RedirectToAction("Create", "SchoolBackgrounds");
         }
 
         // GET: PersonalInfoes/Edit/5

@@ -7,58 +7,60 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using IzimpisiApplicationsOffice.Models;
+using IzimpisiApplicationsOffice.Models.Applications;
 using IzimpisiApplicationsOffice.Models.UserFields;
 using Microsoft.AspNet.Identity;
 
 namespace IzimpisiApplicationsOffice.Controllers
 {
-    public class SchoolRecordsController : Controller
+    public class ApplicationsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: SchoolRecords
+        // GET: Applications
         public ActionResult Index()
         {
             // Get the ID of the logged-in user
             var userId = User.Identity.GetUserId();
 
-            var schoolRecords = db.SchoolRecords.Include(s => s.SchoolBackground)
-                             .Where(a => a.ApplicationUserId == userId)
-                             .ToList();
-
-            return View(schoolRecords);
+            var applications = db.Application
+                              .Include(a => a.ApplicationUser)
+                              .Where(a => a.ApplicationUserId == userId)
+                              .ToList();
+            return View(applications);
         }
 
-        // GET: SchoolRecords/Details/5
+        // GET: Applications/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SchoolRecords schoolRecords = db.SchoolRecords.Find(id);
-            if (schoolRecords == null)
+            Application application = db.Application.Find(id);
+            if (application == null)
             {
                 return HttpNotFound();
             }
-            return View(schoolRecords);
+            return View(application);
         }
 
-        // GET: SchoolRecords/Create
+        // GET: Applications/Create
         public ActionResult Create()
         {
-            ViewBag.ApplicationUserId = new SelectList(db.SchoolBackgrounds, "ApplicationUserId", "SchoolName");
+            //ViewBag.ApplicationUserId = new SelectList(db.ApplicationUsers, "Id", "Email");
             return View();
         }
 
-        // POST: SchoolRecords/Create
+        // POST: Applications/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,SubjectName,Score")] SchoolRecords schoolRecords)
+        public ActionResult Create([Bind(Include = "Id,Program,PersonalStatement")] Application application)
         {
-
+            //if (ModelState.IsValid)
+            //{
             // Retrieve the current user's ID
             string userId = User.Identity.GetUserId();
 
@@ -67,68 +69,74 @@ namespace IzimpisiApplicationsOffice.Controllers
                 // If the user is not logged in, redirect to the register page
                 return RedirectToAction("Register", "Account");
             }
-                schoolRecords.level = schoolRecords.GetAPSLevel();
-                schoolRecords.ApplicationUserId = userId;
-                db.SchoolRecords.Add(schoolRecords);
-                db.SaveChanges();
-                return RedirectToAction("Index", "SchoolRecords");
+
+            application.ApplicationDate = DateTime.Now;
+            application.Status = Application.Statuses.Pending;
+            application.ApplicationUserId = userId;
+            db.Application.Add(application);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Applications");
+            //}
+
+            //ViewBag.ApplicationUserId = new SelectList(db.ApplicationUsers, "Id", "Email", application.ApplicationUserId);
+            //return View(application);
         }
 
-        // GET: SchoolRecords/Edit/5
+        // GET: Applications/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SchoolRecords schoolRecords = db.SchoolRecords.Find(id);
-            if (schoolRecords == null)
+            Application application = db.Application.Find(id);
+            if (application == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ApplicationUserId = new SelectList(db.SchoolBackgrounds, "ApplicationUserId", "SchoolName", schoolRecords.ApplicationUserId);
-            return View(schoolRecords);
+            //ViewBag.ApplicationUserId = new SelectList(db.ApplicationUsers, "Id", "Email", application.ApplicationUserId);
+            return View(application);
         }
 
-        // POST: SchoolRecords/Edit/5
+        // POST: Applications/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,SubjectName,Score,level,ApplicationUserId")] SchoolRecords schoolRecords)
+        public ActionResult Edit([Bind(Include = "Id,Program,PersonalStatement,ApplicationDate,Status,ApplicationUserId")] Application application)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(schoolRecords).State = EntityState.Modified;
+                db.Entry(application).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ApplicationUserId = new SelectList(db.SchoolBackgrounds, "ApplicationUserId", "SchoolName", schoolRecords.ApplicationUserId);
-            return View(schoolRecords);
+            //ViewBag.ApplicationUserId = new SelectList(db.ApplicationUsers, "Id", "Email", application.ApplicationUserId);
+            return View(application);
         }
 
-        // GET: SchoolRecords/Delete/5
+        // GET: Applications/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SchoolRecords schoolRecords = db.SchoolRecords.Find(id);
-            if (schoolRecords == null)
+            Application application = db.Application.Find(id);
+            if (application == null)
             {
                 return HttpNotFound();
             }
-            return View(schoolRecords);
+            return View(application);
         }
 
-        // POST: SchoolRecords/Delete/5
+        // POST: Applications/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            SchoolRecords schoolRecords = db.SchoolRecords.Find(id);
-            db.SchoolRecords.Remove(schoolRecords);
+            Application application = db.Application.Find(id);
+            db.Application.Remove(application);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

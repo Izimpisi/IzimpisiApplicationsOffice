@@ -1,14 +1,14 @@
 ﻿@model IzimpisiApplicationsOffice.Models.UserFields.SchoolBackground
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Add School Background";
 }
 
 <main class="d-flex flex-column align-items-center">
 
     <h2>Add Schooling Background - Step 2</h2>
 
-    @using (Html.BeginForm())
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "w-100" }))
     {
         @Html.AntiForgeryToken()
 
@@ -17,7 +17,7 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(model => model.SchoolName, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.SchoolName, htmlAttributes: new { @class = "control-label col-md-12" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.SchoolName, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.SchoolName, "", new { @class = "text-danger" })
@@ -25,7 +25,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.YearCompleted, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.YearCompleted, htmlAttributes: new { @class = "control-label col-md-12" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.YearCompleted, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.YearCompleted, "", new { @class = "text-danger" })

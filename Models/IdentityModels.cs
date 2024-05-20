@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using IzimpisiApplicationsOffice.Models.UserFields;
+using IzimpisiApplicationsOffice.Models.Applications;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -21,6 +22,7 @@ namespace IzimpisiApplicationsOffice.Models
         public bool HasApplied {  get; set; } = false;
         public virtual SchoolBackground SchoolBackground { get; set; }
         public virtual PersonalInfo PersonalInfo { get; set; }
+        public virtual ICollection<Application> Application { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -38,14 +40,11 @@ namespace IzimpisiApplicationsOffice.Models
         public DbSet<SchoolBackground> SchoolBackgrounds { get; set; }
         public DbSet<SchoolRecords> SchoolRecords { get; set; }
         public DbSet<PersonalInfo> PersonalInfo { get; set; }
+        public DbSet<Application> Application { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder); // Call the base method to set up Identity-related configurations
-
-            // Ignore Identity entities
-            //modelBuilder.Ignore<IdentityUserLogin>();
-            //modelBuilder.Ignore<IdentityUserRole>();
 
             // Configure the relationships between ApplicationUser and PersonalInfo
             modelBuilder.Entity<ApplicationUser>()
@@ -62,6 +61,11 @@ namespace IzimpisiApplicationsOffice.Models
             modelBuilder.Entity<SchoolRecords>()
                 .HasRequired(s => s.SchoolBackground) // SchoolRecord must have one school background
                 .WithMany(u => u.SchoolRecords) // Schoo background can have many SchoolRecords
+                .HasForeignKey(s => s.ApplicationUserId); 
+
+            modelBuilder.Entity<Application>()
+                .HasRequired(s => s.ApplicationUser) // SchoolRecord must have one school background
+                .WithMany(u => u.Application) // Schoo background can have many SchoolRecords
                 .HasForeignKey(s => s.ApplicationUserId);
         }
     }

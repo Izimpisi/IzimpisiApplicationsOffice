@@ -15,7 +15,7 @@ namespace IzimpisiApplicationsOffice.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Izimpisi Applications Office is one of the leading digital application systems. It is based on all public higher education institutions in the Gauteng Province.";
 
             return View();
         }
