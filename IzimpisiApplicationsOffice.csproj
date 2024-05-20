@@ -202,10 +202,14 @@
     <Compile Include="Migrations\202405191558588_UpdateUserRelationships4.designer.cs">
       <DependentUpon>202405191558588_UpdateUserRelationships4.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202405201930087_UpdateUserRelationships5.cs" />
+    <Compile Include="Migrations\202405201930087_UpdateUserRelationships5.designer.cs">
+      <DependentUpon>202405201930087_UpdateUserRelationships5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Applications\Application.cs" />
-    <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\Applications\Courses.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UserFields\PersonalInfo.cs" />
@@ -355,6 +359,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202405191558588_UpdateUserRelationships4.resx">
       <DependentUpon>202405191558588_UpdateUserRelationships4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405201930087_UpdateUserRelationships5.resx">
+      <DependentUpon>202405201930087_UpdateUserRelationships5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -24,7 +24,7 @@ namespace IzimpisiApplicationsOffice.Models.Applications
         [Key]
         [Required]
         [ForeignKey(nameof(Application))]
-        public string ApplicationId { get; set; }
+        public int ApplicationId { get; set; }
 
         public virtual Application Application { get; set; }
     }
