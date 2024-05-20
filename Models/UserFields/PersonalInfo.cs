@@ -36,7 +36,6 @@ namespace IzimpisiApplicationsOffice.Models.UserFields
         [ForeignKey(nameof(ApplicationUser))]
         public string ApplicationUserId { get; set; }
 
-      
         public virtual ApplicationUser ApplicationUser { get; set; }
 
 

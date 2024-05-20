@@ -35,7 +35,8 @@ namespace IzimpisiApplicationsOffice.Models.Applications
         }
         public Statuses Status { get; set; } // e.g., "Pending", "Accepted", "Rejected"
 
-        // Foreign key
+        // Foreign keys
+        public virtual Courses Courses { get; set; }
         public string ApplicationUserId { get; set; }
 
         // Navigation property
