@@ -1,4 +1,6 @@
-﻿using System;
+﻿using IzimpisiApplicationsOffice.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +10,11 @@ namespace IzimpisiApplicationsOffice.Controllers
 {
     public class HomeController : Controller
     {
+        
         public ActionResult Index()
         {
-            return View();
+            var userEmail = User.Identity.Name; // Get the current logged-in user's ID
+            return View((object)userEmail);
         }
 
         public ActionResult About()

@@ -37,7 +37,17 @@
                 Izimpisi Applications Office is one of the leading digital application systems. It is based on all
                 public higher education institutions in the Gauteng Province.
             </p>
-            <p><a class="btn btn-outline-primary" href="/PersonalInfoes/Create">Create New Application</a></p>
+            @if (Model != "admin@gmail.com")
+            {
+                <p><a class="btn btn-outline-primary" href="/PersonalInfoes/Create">Create New Application</a></p>
+            }
+            else
+            {
+                <p><a class="btn btn-outline-primary" href="/Applications/Index">View All Applications</a></p>
+                <p><a class="btn btn-outline-primary" href="/Courses/Create">Add Courses</a>
+                <a class="btn btn-outline-primary" href="/Courses/Index">View Courses</a></p>
+            }
+
         </section>
     </div>
     <div class="container photo-grid">

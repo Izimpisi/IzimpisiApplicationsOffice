@@ -10,22 +10,18 @@ namespace IzimpisiApplicationsOffice.Models.Applications
 {
     public class Courses
     {
+        [Key]
+        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int CourseId { get; set; }  
         [Required]
         [DisplayName("Name Of Course")]
         public string Name { get; set; }
         [Required]
         [DisplayName("Course Duration")]
-        public int Years { get; set;}
+        public int Years { get; set; }
         [Required]
         [DisplayName("Minimum Points For Admission")]
-        public int MinimumAPS { get; set;}
-
-        //foreign keys
-        [Key]
-        [Required]
-        [ForeignKey(nameof(Application))]
-        public int ApplicationId { get; set; }
-
-        public virtual Application Application { get; set; }
+        public int MinimumAPS { get; set; }
     }
 }

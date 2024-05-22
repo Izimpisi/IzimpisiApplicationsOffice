@@ -41,6 +41,7 @@ namespace IzimpisiApplicationsOffice.Models
         public DbSet<SchoolRecords> SchoolRecords { get; set; }
         public DbSet<PersonalInfo> PersonalInfo { get; set; }
         public DbSet<Application> Application { get; set; }
+        public DbSet<Courses> Courses { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

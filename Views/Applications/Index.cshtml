@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.ApplicationUser.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Program)
+            @Html.DisplayNameFor(model => model.NeedResidence)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PersonalStatement)
@@ -36,7 +36,7 @@
                 @Html.DisplayFor(modelItem => item.ApplicationUser.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Program)
+                @Html.DisplayFor(modelItem => item.NeedResidence)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PersonalStatement)
@@ -47,11 +47,27 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
+            @if(item.Course == null && User.Identity.Name != "admin@gmail.com")
+                {
+                    <td>
+                        @Html.ActionLink("Add Course", "Courses/Index")
+                    </td>
+                }
+            @if(User.Identity.Name == "admin@gmail.com")
+            {
+                <td>
+                    @Html.ActionLink("Change Status", "EditAdmin", new { id = item.Id }) 
+                </td>
+            } 
+            else
+            {
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) 
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) 
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            }
+            
         </tr>
     }
 <tr>
