@@ -17,9 +17,10 @@ namespace IzimpisiApplicationsOffice.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Courses
-        public ActionResult Index()
+        public ActionResult Index(int? applicationId)
         {
-            return View(db.Courses.ToList());
+            ViewBag.ApplicationId = applicationId;
+            return View("Index", db.Courses.ToList());
         }
 
         // GET: Courses/Details/5

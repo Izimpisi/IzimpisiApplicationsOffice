@@ -113,7 +113,7 @@ namespace IzimpisiApplicationsOffice.Controllers
                 // Optionally rethrow the exception or handle it as needed
                 throw;
             }
-                return RedirectToAction("Index", "Courses");
+                return RedirectToAction("Index", "Applications");
             //}
 
             //ViewBag.ApplicationUserId = new SelectList(db.ApplicationUsers, "Id", "Email", application.ApplicationUserId);
@@ -153,22 +153,28 @@ namespace IzimpisiApplicationsOffice.Controllers
                 return RedirectToAction("Register", "Account");
             }
 
-            var applications = db.Application.Include(a => a.Course).ToList();
-            foreach (var app in applications)
-            {
-                if (app.Course == null)
-                {
-                    application.Status = Application.Statuses.Incomplete;
-                }
-                else
-                {
-                    application.Status = Application.Statuses.Pending;
-                }
-            }
+            Application existingApplication = db.Application.Find(application.Id);
 
-                db.Entry(application).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index", "Applications");
+            // Update the properties of the existing application entity
+            //existingApplication.CourseId = application.CourseId;
+            existingApplication.PersonalStatement = application.PersonalStatement;
+            existingApplication.NeedResidence = application.NeedResidence;
+
+            // Mark the existing application entity as modified
+            db.Entry(existingApplication).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index", "Applications");
+        }
+
+        [Route("Applications/AddCourse")]
+        public ActionResult AddCourse(int? applicationId, int? CourseId)
+        {
+            Application application = db.Application.Find(applicationId);
+            application.CourseId = CourseId;
+            application.Status = Application.Statuses.Pending;
+
+            db.SaveChanges();
+            return RedirectToAction("Index", "Applications");
         }
 
         public ActionResult EditAdmin(int? id)
@@ -195,24 +201,30 @@ namespace IzimpisiApplicationsOffice.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditAdmin([Bind(Include = "Status")] Application application)
+        public ActionResult EditAdmin([Bind(Include = "Id, Status")] Application application)
         {
             // Retrieve the current user's ID
-            string userId = User.Identity.GetUserId();
+            var userId = User.Identity.GetUserId();
+            string userEmail = User.Identity.Name;
             if (string.IsNullOrEmpty(userId))
             {
                 // If the user is not logged in, redirect to the register page
                 return RedirectToAction("Register", "Account");
             }
-            if (userId != "e57af288-0e37-4e6c-9efe-76c49a8eacd3")
+            if (userEmail != "admin@gmail.com")
             {
                 RedirectToAction("Index", "Applications");
             }
 
-            var applications = db.Application.Include(a => a.Course).ToList();
-                db.Entry(application).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index", "Applications");
+            Application existingApplication = db.Application.Find(application.Id);
+
+            //existingApplication.CourseId = application.CourseId;
+            existingApplication.Status = application.Status;
+
+            // Mark the existing application entity as modified
+            db.Entry(existingApplication).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index", "Applications");
         }
 
         // GET: Applications/Delete/5

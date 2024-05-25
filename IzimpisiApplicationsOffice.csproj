@@ -223,6 +223,10 @@
     <Compile Include="Migrations\202405211807478_UpdateUserRelationships9.designer.cs">
       <DependentUpon>202405211807478_UpdateUserRelationships9.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202405220950226_UpdateUserRelationships10.cs" />
+    <Compile Include="Migrations\202405220950226_UpdateUserRelationships10.designer.cs">
+      <DependentUpon>202405220950226_UpdateUserRelationships10.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Applications\Application.cs" />
@@ -397,6 +401,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202405211807478_UpdateUserRelationships9.resx">
       <DependentUpon>202405211807478_UpdateUserRelationships9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405220950226_UpdateUserRelationships10.resx">
+      <DependentUpon>202405220950226_UpdateUserRelationships10.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

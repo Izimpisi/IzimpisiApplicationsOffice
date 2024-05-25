@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Courses";
+    int? applicationId = ViewBag.ApplicationId;
 }
 
 <h2>List Of Courses</h2>
@@ -34,11 +35,21 @@
         <td>
             @Html.DisplayFor(modelItem => item.MinimumAPS)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CourseId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.CourseId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CourseId })
-        </td>
+        @if (User.Identity.Name == "admin@gmail.com")
+        {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) 
+                @Html.ActionLink("Details", "Details", new { id = item.CourseId })
+                @Html.ActionLink("Delete", "Delete", new { id = item.CourseId })
+            </td>
+        }
+        else
+        {
+            <td>
+                @Html.ActionLink("Add", "AddCourse", "Applications", new { applicationId, item.CourseId }, null)
+            </td>
+        }
+
     </tr>
 }
 

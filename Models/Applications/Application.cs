@@ -28,6 +28,12 @@ namespace IzimpisiApplicationsOffice.Models.Applications
             Pending, Accepted, Rejected, Incomplete
         }
         public Statuses Status { get; set; } // e.g., "Pending", "Accepted", "Rejected"
+        public enum Colleges
+        {
+            WITS, University_of_Pretoria, University_Of_Johannesburg, TUT, Roodepoort_Tvet_College, Midrand_Tvet_College, Egoli_College
+        }
+        [Required]
+        public Colleges College { get; set; } // e.g., "Pending", "Accepted", "Rejected"
 
         // Foreign keys
         public int? CourseId { get; set; }

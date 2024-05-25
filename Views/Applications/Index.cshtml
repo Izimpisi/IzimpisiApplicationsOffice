@@ -26,6 +26,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Status)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Course.Name)
+        </th>
         <th></th>
     </tr>
 
@@ -47,10 +50,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course.Name)
+            </td>
             @if(item.Course == null && User.Identity.Name != "admin@gmail.com")
                 {
                     <td>
-                        @Html.ActionLink("Add Course", "Courses/Index")
+                        @Html.ActionLink("Add Course", "Index", "Courses", new { applicationId = item.Id }, null)
                     </td>
                 }
             @if(User.Identity.Name == "admin@gmail.com")
